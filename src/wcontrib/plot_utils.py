@@ -8,7 +8,9 @@ import numpy as np
 ########
 # Plot #
 ########
-def plot_tree_aggs(y, levels, no_legend=True, widths=[1, 3], ylabel=None):
+def plot_tree_aggs(
+    y, levels, no_legend=True, widths=[1, 3], ylabel=None
+):
     """
     @levels: e.g.: [2, 3, 6, 7, 8] will plot mid point (like median or mean)
     at 6, a thin horizontal bar from 2-8, and a thicker bar from 3-7.
@@ -19,7 +21,9 @@ def plot_tree_aggs(y, levels, no_legend=True, widths=[1, 3], ylabel=None):
     plt.plot(mid, y, ".k", markersize=10, label=label)
 
     lines = [(v_lo, v_hi), (lo, hi)]
-    for i, (x_lo, x_hi), width in zip(it.count(), lines[::-1], widths[::-1]):
+    for i, (x_lo, x_hi), width in zip(
+        it.count(), lines[::-1], widths[::-1]
+    ):
         plt.hlines(y, x_lo, x_hi, linewidth=width, label=label)
     return y, ylabel
 
@@ -60,13 +64,17 @@ def decorate(**options):
     plt.tight_layout()
 
 
-def mk_sublots(nrows=1, ncols=2, figsize=(16, 5), **kw):
+def mk_sublots(nrows=1, ncols=2, figsize_per=(8, 5), **kw):
     """
     -> ("axes", "iter.n")
     """
     import matplotlib.pyplot as plt
 
-    _, axs_ = plt.subplots(nrows=nrows, ncols=ncols, figsize=figsize, **kw)
+    figsize = (figsize_per[0] * ncols, figsize_per[1] * nrows)
+
+    _, axs_ = plt.subplots(
+        nrows=nrows, ncols=ncols, figsize=figsize, **kw
+    )
 
     mk_sublots.axs_ = axs_
     axs = iter(axs_)

@@ -5,3 +5,10 @@ def nd_iter(arr):
     elif len(arr.shape) == 1:
         return (e for row in arr for e in row)
     raise NotImplementedError
+
+
+def ap(f, xs):
+    try:
+        return [f(x) for x in xs]
+    except TypeError:
+        return [f[x] for x in xs]
