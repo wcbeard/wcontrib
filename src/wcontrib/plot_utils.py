@@ -3,6 +3,7 @@ import itertools as it
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 import numpy as np
+import sklearn.metrics as mt
 
 
 ########
@@ -112,3 +113,18 @@ def log_scale(xaxis=True):
         plt.yscale("log")
         ax = plt.gca().get_yaxis()
     ax.set_major_formatter(fmtr)
+
+
+def plot_roc(y, ypred):
+    fpr, tpr, _ = mt.roc_curve(y, ypred)
+    auc = mt.roc_auc_score(y, ypred)
+    plt.plot(fpr, tpr, label=f"auc={auc}")
+    plt.xlabel("FP")
+    plt.ylabel("TP")
+
+
+def plot_prec_rec(y, ypred):
+    prec, rec, thresh = mt.precision_recall_curve(y, ypred)
+    plt.plot(rec, prec)
+    plt.xlabel("recall")
+    plt.ylabel("precision")
