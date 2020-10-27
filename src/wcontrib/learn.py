@@ -1,13 +1,13 @@
 import time
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import RobustScaler, StandardScaler
 import sklearn.metrics as mt
 from pandas import DataFrame
 
 named_scalers = {}
 
 
-def std_sc(srs, name=None):
-    ss = StandardScaler()
+def std_sc(srs, name=None, rob=False):
+    ss = RobustScaler() if rob else StandardScaler()
     if name is not None:
         named_scalers[name] = ss
     return ss.fit_transform(srs.values[:, None]).ravel()
@@ -38,3 +38,6 @@ def toc():
     end = time.perf_counter()
     return end - tic.start
 
+
+def shapes(*xs):
+    return [x.shape for x in xs]
