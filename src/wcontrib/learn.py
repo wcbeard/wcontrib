@@ -6,8 +6,11 @@ from pandas import DataFrame
 named_scalers = {}
 
 
-def std_sc(srs, name=None, rob=False):
-    ss = RobustScaler() if rob else StandardScaler()
+def std_sc(srs, name=None, rob=False, mk_sc=None):
+    if mk_sc is not None:
+        ss = mk_sc()
+    else:
+        ss = RobustScaler() if rob else StandardScaler()
     if name is not None:
         named_scalers[name] = ss
     return ss.fit_transform(srs.values[:, None]).ravel()

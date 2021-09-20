@@ -177,7 +177,8 @@ class NearestNeighborsFeats(BaseEstimator, ClassifierMixin):
         For each class select the neighbors of that class among K nearest neighbors 
         and compute the average distance to those objects
 
-        If there are no objects of a certain class among K neighbors, set mean distance to 999
+        If there are no objects of a certain class among K neighbors,
+        set mean distance to 999
 
         You can use `np.bincount` with appropriate weights
         Don't forget, that if you divide by something, 
@@ -194,7 +195,7 @@ class NearestNeighborsFeats(BaseEstimator, ClassifierMixin):
         return np.column_stack(return_list)
 
 
-def frac_objects_each_class(k, neighs_y, n_classes=len(np.unique(Y))):
+def frac_objects_each_class(k, neighs_y, n_classes):
     """
     Fraction of objects of every class.
     It is basically a KNNСlassifiers predictions.
