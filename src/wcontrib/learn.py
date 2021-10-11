@@ -6,6 +6,40 @@ from pandas import DataFrame
 named_scalers = {}
 
 
+def df_fit(model, df, *a, **k):
+    """
+    sklearn fit wrapper, using the column named `y` in
+    df as the label.
+    """
+    x = df.drop(["y"], axis=1)
+    y = df["y"]
+    return model.fit(x, y, *a, **k)
+
+
+def df_predict(model, df, *a, **k):
+    """
+    sklearn fit wrapper, using the column named `y` in
+    df as the label.
+    """
+    x = df[[c for c in df if c != "y"]]
+    return model.predict(x, *a, **k)
+
+
+def df_predict_proba(model, df, *a, **k):
+    """
+    sklearn fit wrapper, using the column named `y` in
+    df as the label.
+    """
+    x = df[[c for c in df if c != "y"]]
+    return model.predict_proba(x, *a, **k)
+
+
+def set_df_funcs(sklearn):
+    sklearn.base.ClassifierMixin.dfit = df_fit
+    sklearn.base.ClassifierMixin.dpredict = df_predict
+    sklearn.base.ClassifierMixin.dpredict_proba = df_predict_proba
+
+
 def std_sc(srs, name=None, rob=False, mk_sc=None):
     if mk_sc is not None:
         ss = mk_sc()
